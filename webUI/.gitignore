@@ -45,3 +45,4 @@ Thumbs.db
 .env
 .vscode/
 .idea/
+environments/environment.*.ts

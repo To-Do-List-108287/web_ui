@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {initFlowbite} from "flowbite";
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -15,5 +16,6 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
     initFlowbite();
+    console.log(environment)
   }
 }

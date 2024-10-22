@@ -10,12 +10,8 @@
     <p class="text-gray-500 mb-8 text-justify">
       Your ultimate to-do list app designed to help you organize, prioritize, and simplify your daily tasks. With an intuitive interface and customizable categories, staying on top of your personal and professional life has never been easier.
     </p>
-    <button class="px-5 mr-2 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 min-w-28">
-      Sign In
-    </button>
-    <button class="px-5 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 min-w-28" >
-      Register
-    </button>
+    <button (click)="window.location.href = environment.LOGIN_URL" class="px-5 mr-2 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 min-w-28">Sign In</button>
+    <button (click)="window.location.href = environment.SIGN_UP_URL" class="px-5 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 min-w-28" >Register</button>
   </div>
 
   <div class="w-7/12 relative">
