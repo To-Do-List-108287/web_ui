@@ -1,0 +1,96 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #34495e;
+}
+
+.container{
+  width: 250px;
+
+}
+
+.bar{
+  width: 100%;
+  height: 10px;
+  background-color: #bdc3c7;
+  border-radius: 8px;
+}
+
+.balls{
+  margin-top: 100px;
+  display: flex;
+}
+
+.ball{
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  position: relative;
+  transform-origin: 50% -100px;/* x axis y axis*/
+}
+
+.ball::before{
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 100px;
+  background-color: white;
+  top: -100px;
+  left: 50%;
+}
+
+/* bounce */
+.ball--start{
+  animation: start 0.8s infinite alternate;
+}
+.ball--end{
+  animation: end 0.8s infinite 0.8s alternate;
+}
+
+@keyframes start {
+  0%, 50%{
+    transform: rotate(0);
+    background-color: #ffffff;
+  }
+  100%{
+    transform: rotate(30deg);
+    background-color: #e74c3c;
+  }
+}
+@keyframes end {
+  0%, 50%{
+    transform: rotate(0);
+    background-color: #ffffff;
+  }
+  100%{
+    transform: rotate(-30deg);
+    background-color: #e74c3c;
+  }
+}
+
+@keyframes ball-2-4-color-shift {
+  0%, 50%{
+    background-color: #ffffff;
+  }
+  100%{
+    background-color: #3498db;
+  }
+}
+
+@keyframes ball-3-color-shift {
+  0%, 50%{
+    background-color: #ffffff;
+  }
+  100%{
+    background-color: #e74c3c;
+  }
+}

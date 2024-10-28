@@ -1,5 +1,5 @@
 <div class="absolute top-0 right-0 h-full w-7/12 bg-no-repeat bg-cover"
-     style="background-image: url('./assets/background-image-landing-page.jpg');"></div>
+     style="background-image: url('../../../assets/background-image-landing-page.jpg');"></div>
 <div class="absolute top-0 right-0 h-full w-7/12 bg-no-repeat bg-cover bg-blue-50 opacity-20"></div>
 
 
@@ -10,8 +10,13 @@
     <p class="text-gray-500 mb-8 text-justify">
       Your ultimate to-do list app designed to help you organize, prioritize, and simplify your daily tasks. With an intuitive interface and customizable categories, staying on top of your personal and professional life has never been easier.
     </p>
-    <button (click)="window.location.href = environment.LOGIN_URL" class="px-5 mr-2 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 min-w-28">Sign In</button>
-    <button (click)="window.location.href = environment.SIGN_UP_URL" class="px-5 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 min-w-28" >Register</button>
+    <ng-container *ngIf="this.authService.isLoggedIn else logged_out">
+      <button (click)="this.authService.logout()" class="px-5 mr-2 py-3 bg-red-500 text-white rounded-lg shadow-lg hover:bg-red-600 min-w-28">Logout</button>
+    </ng-container>
+    <ng-template #logged_out>
+      <button (click)="window.location.href = environment.LOGIN_URL" class="px-5 mr-2 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 min-w-28">Sign In</button>
+      <button (click)="window.location.href = environment.SIGN_UP_URL" class="px-5 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 min-w-28" >Register</button>
+    </ng-template>
   </div>
 
   <div class="w-7/12 relative">
