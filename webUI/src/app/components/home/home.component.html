@@ -9,11 +9,12 @@
         #todoList="cdkDropList"
         [cdkDropListData]="todoTasks"
         [cdkDropListConnectedTo]="[inProgressList, doneList]"
-        class="list w-11/12 my-4"
+        class="list w-11/12"
         (cdkDropListDropped)="drop($event)">
         @for (item of todoTasks; track item) {
           <div class="box my-2" cdkDrag>{{item}}</div>
         }
+        <button (click)="openDialog()" type="button" class="w-full mb-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Task</button>
       </div>
     </mat-card>
   </div>
@@ -54,6 +55,8 @@
       </div>
     </mat-card>
   </div>
+
+
 
 </div>
 
