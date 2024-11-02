@@ -1,1 +1,60 @@
-<p>home works!</p>
+
+<div class="text-center w-full">
+
+  <div class="container">
+    <mat-card class="flex justify-center items-center">
+      <h2 class="my-4">To do</h2>
+      <div
+        cdkDropList
+        #todoList="cdkDropList"
+        [cdkDropListData]="todoTasks"
+        [cdkDropListConnectedTo]="[inProgressList, doneList]"
+        class="list w-11/12 my-4"
+        (cdkDropListDropped)="drop($event)">
+        @for (item of todoTasks; track item) {
+          <div class="box my-2" cdkDrag>{{item}}</div>
+        }
+      </div>
+    </mat-card>
+  </div>
+
+
+  <div class="container">
+    <mat-card class="flex justify-center items-center">
+      <h2 class="my-4">In progress</h2>
+
+      <div
+        cdkDropList
+        #inProgressList="cdkDropList"
+        [cdkDropListData]="inProgressTasks"
+        [cdkDropListConnectedTo]="[todoList, doneList]"
+        class="list w-11/12 my-4"
+        (cdkDropListDropped)="drop($event)">
+        @for (item of inProgressTasks; track item) {
+          <div class="box my-2" cdkDrag>{{item}}</div>
+        }
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="container">
+    <mat-card class="flex justify-center items-center">
+      <h2 class="my-4">Done</h2>
+
+      <div
+        cdkDropList
+        #doneList="cdkDropList"
+        [cdkDropListData]="doneTasks"
+        [cdkDropListConnectedTo]="[todoList, inProgressList]"
+        class="list w-11/12 my-4"
+        (cdkDropListDropped)="drop($event)">
+        @for (item of doneTasks; track item) {
+          <div class="box my-2" cdkDrag>{{item}}</div>
+        }
+      </div>
+    </mat-card>
+  </div>
+
+</div>
+
+
