@@ -46,6 +46,7 @@ import {TaskResponse} from "../../models/TaskResponse";
 })
 export class AddTaskDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
+
   taskService = inject(TaskService);
   createTaskFormGroup: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
@@ -71,10 +72,14 @@ export class AddTaskDialogComponent {
       }).subscribe({
         next: (res: TaskResponse) => {
           console.log(res);
+          this.dialogRef.close(res);
         },
-        error: err => console.error(err)
+        error: err => {
+          console.error(err);
+          this.dialogRef.close();
+        }
       })
-      this.dialogRef.close();
+
     } else {
       console.error("Invalid form data");
     }

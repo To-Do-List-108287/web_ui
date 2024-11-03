@@ -6,7 +6,5 @@ export function futureDateValidator(control: AbstractControl) {
   today.setHours(0, 0, 0, 0);
   selectedDate.setHours(0, 0, 0, 0);
 
-  console.log("comparison result: ", selectedDate >= today);
-
   return selectedDate >= today ? null : { pastDate: true };
 }

@@ -11,10 +11,20 @@
         [cdkDropListConnectedTo]="[inProgressList, doneList]"
         class="list w-11/12"
         (cdkDropListDropped)="drop($event)">
-        @for (item of todoTasks; track item) {
-          <div class="box my-2" cdkDrag>{{item}}</div>
+        @for (task of todoTasks; track task) {
+          <div class="box my-2" id="task_{{task.id}}_{{task.title}}_box" cdkDrag>
+            <span>{{task.title}}</span>
+            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="deadline_{{task.id}}_{{task.title}}">
+              {{task.deadline}}
+            </div>
+            <mat-icon id="task_{{task.id}}_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+                      fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
+                                  task.priority == TaskPriority.MEDIUM ? 'check_box' :
+                                  'low_priority'}}"
+            ></mat-icon>
+          </div>
         }
-        <button (click)="openDialog()" type="button" class="w-full mb-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Task</button>
+        <button (click)="openDialog()" id="add_task_button" type="button" class="w-full mb-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Task</button>
       </div>
     </mat-card>
   </div>
@@ -31,8 +41,18 @@
         [cdkDropListConnectedTo]="[todoList, doneList]"
         class="list w-11/12 my-4"
         (cdkDropListDropped)="drop($event)">
-        @for (item of inProgressTasks; track item) {
-          <div class="box my-2" cdkDrag>{{item}}</div>
+        @for (task of inProgressTasks; track task) {
+          <div class="box my-2" id="task_{{task.id}}_{{task.title}}_box" cdkDrag>
+            <span>{{task.title}}</span>
+            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="deadline_{{task.id}}_{{task.title}}">
+              {{task.deadline}}
+            </div>
+            <mat-icon id="task_{{task.id}}_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+                      fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
+                                  task.priority == TaskPriority.MEDIUM ? 'check_box' :
+                                  'low_priority'}}"
+            ></mat-icon>
+          </div>
         }
       </div>
     </mat-card>
@@ -49,8 +69,18 @@
         [cdkDropListConnectedTo]="[todoList, inProgressList]"
         class="list w-11/12 my-4"
         (cdkDropListDropped)="drop($event)">
-        @for (item of doneTasks; track item) {
-          <div class="box my-2" cdkDrag>{{item}}</div>
+        @for (task of doneTasks; track task) {
+          <div class="box my-2" id="task_{{task.id}}_{{task.title}}_box" cdkDrag>
+            <span>{{task.title}}</span>
+            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="deadline_{{task.id}}_{{task.title}}">
+              {{task.deadline}}
+            </div>
+            <mat-icon id="task_{{task.id}}_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+                      fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
+                                  task.priority == TaskPriority.MEDIUM ? 'check_box' :
+                                  'low_priority'}}"
+            ></mat-icon>
+          </div>
         }
       </div>
     </mat-card>
