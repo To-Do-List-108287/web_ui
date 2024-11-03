@@ -9,7 +9,6 @@ import {authInterceptor} from "./interceptors/authInterceptor";
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     provideRouter(routes), provideAnimationsAsync(),
     provideHttpClient(
       withInterceptors([

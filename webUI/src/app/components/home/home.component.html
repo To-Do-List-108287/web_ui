@@ -12,12 +12,12 @@
         class="list w-11/12"
         (cdkDropListDropped)="drop($event)">
         @for (task of todoTasks; track task) {
-          <div class="box my-2" id="task_{{task.id}}_{{task.title}}_box" cdkDrag>
-            <span>{{task.title}}</span>
-            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="deadline_{{task.id}}_{{task.title}}">
+          <div class="box my-2" cdkDrag>
+            <span id="{{task.id}}_task_todo_{{task.title}}">{{task.title}}</span>
+            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="{{task.id}}_deadline_todo_{{task.title}}">
               {{task.deadline}}
             </div>
-            <mat-icon id="task_{{task.id}}_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+            <mat-icon id="{{task.id}}_task_todo_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
                       fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
@@ -42,12 +42,12 @@
         class="list w-11/12 my-4"
         (cdkDropListDropped)="drop($event)">
         @for (task of inProgressTasks; track task) {
-          <div class="box my-2" id="task_{{task.id}}_{{task.title}}_box" cdkDrag>
-            <span>{{task.title}}</span>
-            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="deadline_{{task.id}}_{{task.title}}">
+          <div class="box my-2" cdkDrag>
+            <span id="{{task.id}}_task_inprogress_{{task.title}}">{{task.title}}</span>
+            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="{{task.id}}_deadline_inprogress_{{task.title}}">
               {{task.deadline}}
             </div>
-            <mat-icon id="task_{{task.id}}_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+            <mat-icon id="{{task.id}}_task_inprogress_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
                       fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
@@ -70,12 +70,12 @@
         class="list w-11/12 my-4"
         (cdkDropListDropped)="drop($event)">
         @for (task of doneTasks; track task) {
-          <div class="box my-2" id="task_{{task.id}}_{{task.title}}_box" cdkDrag>
-            <span>{{task.title}}</span>
-            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="deadline_{{task.id}}_{{task.title}}">
+          <div class="box my-2" cdkDrag>
+            <span id="{{task.id}}_task_done_{{task.title}}">{{task.title}}</span>
+            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="{{task.id}}_deadline_done_{{task.title}}">
               {{task.deadline}}
             </div>
-            <mat-icon id="task_{{task.id}}_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+            <mat-icon id="{{task.id}}_task_done_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
                       fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
