@@ -34,6 +34,10 @@ export class AuthService {
     // let decoded_token = this.helper.decodeToken(authResponse.access)
   }
 
+  getToken(): String | null {
+    return localStorage.getItem("token");
+  }
+
   logout() : void {
     localStorage.clear();
     this.isLoggedIn = false;
