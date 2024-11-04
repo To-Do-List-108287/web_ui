@@ -20,7 +20,6 @@ import {MatSelect} from "@angular/material/select";
 import {futureDateValidator} from "../../validators/futureDateValidator";
 import {TaskPriority} from "../../models/TaskPriority";
 import {CreateTaskRequest} from "../../models/CreateTaskRequest";
-import {filter, map, pairwise} from "rxjs";
 
 @Component({
   selector: 'app-edit-task-dialog',
