@@ -23,13 +23,7 @@ import {EditTaskDialogComponent} from "../edit-task-dialog/edit-task-dialog.comp
 })
 export class HomeComponent {
   readonly dialog = inject(MatDialog);
-  todoTasks: TaskResponse[] = [{
-    id: 1, title: 'Task 1', description: 'Task 1 description', priority: TaskPriority.LOW,
-    creationDate: '',
-    lastUpdated: '',
-    deadline: '12/12/2024',
-    completionStatus: TaskCompletionStatus.TO_DO
-  }];
+  todoTasks: TaskResponse[] = [];
   inProgressTasks: TaskResponse[] = [];
   doneTasks: TaskResponse[] = [];
 
