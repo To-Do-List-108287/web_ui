@@ -23,4 +23,9 @@ export class TaskService {
     const url: string = `${this.baseURL}/${taskId}`;
     return this.http.delete<void>(url);
   }
+
+  editTask(taskId: number, updatedTask: Partial<CreateTaskRequest>): Observable<TaskResponse> {
+    const url: string = `${this.baseURL}/${taskId}`;
+    return this.http.put<TaskResponse>(url, updatedTask);
+  }
 }

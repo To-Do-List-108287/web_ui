@@ -9,6 +9,8 @@ import {TaskPriority} from "../../models/TaskPriority";
 import {MatMiniFabButton} from "@angular/material/button";
 import {NgStyle} from "@angular/common";
 import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
+import {TaskCompletionStatus} from "../../models/TaskCompletionStatus";
+import {EditTaskDialogComponent} from "../edit-task-dialog/edit-task-dialog.component";
 
 @Component({
   selector: 'app-home',
@@ -21,7 +23,13 @@ import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialo
 })
 export class HomeComponent {
   readonly dialog = inject(MatDialog);
-  todoTasks: TaskResponse[] = [];
+  todoTasks: TaskResponse[] = [{
+    id: 1, title: 'Task 1', description: 'Task 1 description', priority: TaskPriority.LOW,
+    creationDate: '',
+    lastUpdated: '',
+    deadline: '12/12/2024',
+    completionStatus: TaskCompletionStatus.TO_DO
+  }];
   inProgressTasks: TaskResponse[] = [];
   doneTasks: TaskResponse[] = [];
 
@@ -51,6 +59,14 @@ export class HomeComponent {
           taskList.splice(taskList.indexOf(taskToDelete), 1);
         }
       }
+    });
+  }
+
+  openEditDialog(taskToEdit: TaskResponse) {
+    const dialogRef = this.dialog.open(EditTaskDialogComponent, {
+      height: '523px',
+      width: '523px',
+      data: {task: taskToEdit}
     });
   }
 

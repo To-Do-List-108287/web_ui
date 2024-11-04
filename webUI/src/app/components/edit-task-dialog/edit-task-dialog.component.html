@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>Edit your task</h2>
+<mat-dialog-content>
+
+  <form [formGroup]="editTaskFormGroup">
+    <p>What title would you like to give to this task?</p>
+    <mat-form-field class="w-full">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" id="input_task_title"/>
+    </mat-form-field>
+
+    <p>Give a description for the task.</p>
+    <mat-form-field class="w-full">
+      <mat-label>Description</mat-label>
+      <input matInput formControlName="description" id="input_task_description"/>
+    </mat-form-field>
+
+    <p>Pick a deadline.</p>
+    <mat-form-field class="w-full">
+      <mat-label>Choose a future date.</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="deadline" id="input_task_deadline">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+    <p>How urgently do you need to complete this task?</p>
+    <mat-form-field class="w-full">
+      <mat-label>Pick a priority.</mat-label>
+      <mat-select formControlName="priority" id="input_task_select">
+        @for (priority of priorities; track priority) {
+          <mat-option [value]="priority.value" id="input_task_option_{{priority.value}}">{{priority.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+</mat-dialog-content>
+<mat-dialog-actions class="p-0">
+  <button mat-button (click)="onConfirmClick()" id="task_confirm_button">Confirm</button>
+</mat-dialog-actions>
+
