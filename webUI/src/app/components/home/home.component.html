@@ -25,15 +25,19 @@
             ></mat-icon>
 
             <div>
-              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background">
+              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background mr-1.5">
                 <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
               </button>
 
-              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mx-1.5">
+              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mr-1.5">
                 <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
               </button>
 
-              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task, this.todoTasks)">
+              <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background mr-1.5" (click)="openEditDialog(task)">
+                <mat-icon fontIcon="edit" class="text-white"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.todoTasks)">
                 <mat-icon fontIcon="delete" class="text-white"></mat-icon>
               </button>
             </div>
@@ -69,15 +73,19 @@
                                   'low_priority'}}"
             ></mat-icon>
             <div>
-              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background">
+              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background mr-1.5">
                 <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
               </button>
 
-              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mx-1.5">
+              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mr-1.5">
                 <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
               </button>
 
-              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task, this.inProgressTasks)">
+              <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background mr-1.5" (click)="openEditDialog(task)">
+                <mat-icon fontIcon="edit" class="text-white"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.inProgressTasks)">
                 <mat-icon fontIcon="delete" class="text-white"></mat-icon>
               </button>
             </div>
@@ -110,17 +118,23 @@
                                   'low_priority'}}"
             ></mat-icon>
             <div>
-              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background">
-                <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
-              </button>
+              <div>
+                <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background mr-1.5">
+                  <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+                </button>
 
-              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mx-1.5">
-                <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
-              </button>
+                <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mr-1.5">
+                  <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+                </button>
 
-              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task, this.doneTasks)">
-                <mat-icon fontIcon="delete" class="text-white"></mat-icon>
-              </button>
+                <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background mr-1.5" (click)="openEditDialog(task)">
+                  <mat-icon fontIcon="edit" class="text-white"></mat-icon>
+                </button>
+
+                <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.doneTasks)">
+                  <mat-icon fontIcon="delete" class="text-white"></mat-icon>
+                </button>
+              </div>
             </div>
           </div>
         }

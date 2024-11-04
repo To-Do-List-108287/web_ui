@@ -9,6 +9,7 @@ import {TaskPriority} from "../../models/TaskPriority";
 import {MatMiniFabButton} from "@angular/material/button";
 import {NgStyle} from "@angular/common";
 import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
+import {EditTaskDialogComponent} from "../edit-task-dialog/edit-task-dialog.component";
 
 @Component({
   selector: 'app-home',
@@ -51,6 +52,14 @@ export class HomeComponent {
           taskList.splice(taskList.indexOf(taskToDelete), 1);
         }
       }
+    });
+  }
+
+  openEditDialog(taskToEdit: TaskResponse) {
+    this.dialog.open(EditTaskDialogComponent, {
+      height: '523px',
+      width: '523px',
+      data: {task: taskToEdit}
     });
   }
 
