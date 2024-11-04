@@ -22,20 +22,23 @@
                       fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
-                      class="pr-8"
             ></mat-icon>
 
-            <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background">
-              <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
-            </button>
+            <div>
+              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background">
+                <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+              </button>
 
-            <button mat-mini-fab aria-label="Button to transfer to nothing" class="mx-1.5 arrow_icon_background">
-              <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
-            </button>
+              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mx-1.5">
+                <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+              </button>
 
-            <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task)">
-              <mat-icon fontIcon="delete" class="text-white"></mat-icon>
-            </button>
+              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task)">
+                <mat-icon fontIcon="delete" class="text-white"></mat-icon>
+              </button>
+            </div>
+
+
           </div>
         }
       </div>
@@ -65,6 +68,19 @@
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
             ></mat-icon>
+            <div>
+              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background">
+                <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mx-1.5">
+                <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task)">
+                <mat-icon fontIcon="delete" class="text-white"></mat-icon>
+              </button>
+            </div>
           </div>
         }
       </div>
@@ -93,6 +109,19 @@
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
             ></mat-icon>
+            <div>
+              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background">
+                <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mx-1.5">
+                <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task)">
+                <mat-icon fontIcon="delete" class="text-white"></mat-icon>
+              </button>
+            </div>
           </div>
         }
       </div>
