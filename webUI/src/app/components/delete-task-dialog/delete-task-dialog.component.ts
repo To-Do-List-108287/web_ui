@@ -13,6 +13,7 @@ import {NgStyle} from "@angular/common";
 import {TaskResponse} from "../../models/TaskResponse";
 import {AddTaskDialogComponent} from "../add-task-dialog/add-task-dialog.component";
 import {TaskService} from "../../services/task.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-delete-task-dialog',
@@ -31,6 +32,7 @@ import {TaskService} from "../../services/task.service";
 })
 export class DeleteTaskDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
+  private _snackBar = inject(MatSnackBar);
   taskService = inject(TaskService);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {task: TaskResponse}) { }
@@ -43,10 +45,18 @@ export class DeleteTaskDialogComponent {
     this.taskService.deleteTask(this.data.task.id).subscribe({
       next: (res: void) => {
         this.dialogRef.close(true);
+        this._snackBar.open("Task deleted successfully!", "Close", {
+          duration: 2000,
+          panelClass: ['primary_snackbar']
+        });
       },
       error: err => {
         console.error(err);
         this.dialogRef.close();
+        this._snackBar.open("Error deleting task. Try again later!", "Close", {
+          duration: 2000,
+          panelClass: ['warning_snackbar']
+        });
       }
     })
   }

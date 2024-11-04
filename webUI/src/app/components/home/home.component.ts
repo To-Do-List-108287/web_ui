@@ -9,6 +9,7 @@ import {TaskPriority} from "../../models/TaskPriority";
 import {MatMiniFabButton} from "@angular/material/button";
 import {NgStyle} from "@angular/common";
 import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
+import {TaskCompletionStatus} from "../../models/TaskCompletionStatus";
 
 @Component({
   selector: 'app-home',
@@ -39,7 +40,7 @@ export class HomeComponent {
     });
   }
 
-  openDeleteDialog(taskToDelete: TaskResponse) {
+  openDeleteDialog(taskToDelete: TaskResponse, taskList: TaskResponse[]) {
     const dialogRef = this.dialog.open(DeleteTaskDialogComponent, {
       height: '300px',
       width: '350px',
@@ -48,7 +49,7 @@ export class HomeComponent {
     dialogRef.afterClosed().subscribe({
       next: (isDeleted: boolean) => {
         if (isDeleted) {
-          this.todoTasks.splice(this.todoTasks.indexOf(taskToDelete), 1);
+          taskList.splice(taskList.indexOf(taskToDelete), 1);
         }
       }
     });
