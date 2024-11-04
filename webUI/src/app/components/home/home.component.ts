@@ -9,7 +9,6 @@ import {TaskPriority} from "../../models/TaskPriority";
 import {MatMiniFabButton} from "@angular/material/button";
 import {NgStyle} from "@angular/common";
 import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
-import {TaskCompletionStatus} from "../../models/TaskCompletionStatus";
 
 @Component({
   selector: 'app-home',

@@ -32,7 +32,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class DeleteTaskDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
-  private _snackBar = inject(MatSnackBar);
+  private readonly _snackBar = inject(MatSnackBar);
   taskService = inject(TaskService);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {task: TaskResponse}) { }
