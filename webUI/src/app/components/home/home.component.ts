@@ -6,12 +6,15 @@ import {AddTaskDialogComponent} from "../add-task-dialog/add-task-dialog.compone
 import {TaskResponse} from "../../models/TaskResponse";
 import {MatIcon} from "@angular/material/icon";
 import {TaskPriority} from "../../models/TaskPriority";
+import {MatMiniFabButton} from "@angular/material/button";
+import {NgStyle} from "@angular/common";
+import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CdkDropList, CdkDrag, MatCard, MatIcon
+    CdkDropList, CdkDrag, MatCard, MatIcon, MatMiniFabButton, NgStyle
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -22,7 +25,7 @@ export class HomeComponent {
   inProgressTasks: TaskResponse[] = [];
   doneTasks: TaskResponse[] = [];
 
-  openDialog() {
+  openAddDialog() {
     const dialogRef = this.dialog.open(AddTaskDialogComponent, {
       height: '523px',
       width: '523px',
@@ -31,6 +34,21 @@ export class HomeComponent {
       next: (task: TaskResponse) => {
         if (task) {
           this.todoTasks.push(task);
+        }
+      }
+    });
+  }
+
+  openDeleteDialog(taskToDelete: TaskResponse) {
+    const dialogRef = this.dialog.open(DeleteTaskDialogComponent, {
+      height: '300px',
+      width: '350px',
+      data: {task: taskToDelete}
+    });
+    dialogRef.afterClosed().subscribe({
+      next: (isDeleted: boolean) => {
+        if (isDeleted) {
+          this.todoTasks.splice(this.todoTasks.indexOf(taskToDelete), 1);
         }
       }
     });
@@ -48,6 +66,8 @@ export class HomeComponent {
       );
     }
   }
+
+
 
   protected readonly TaskPriority = TaskPriority;
 }

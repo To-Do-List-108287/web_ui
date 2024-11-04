@@ -11,9 +11,10 @@
         [cdkDropListConnectedTo]="[inProgressList, doneList]"
         class="list w-11/12"
         (cdkDropListDropped)="drop($event)">
+        <button (click)="openAddDialog()" id="add_task_button" type="button" class="w-full mb-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Task</button>
         @for (task of todoTasks; track task) {
           <div class="box my-2" cdkDrag>
-            <span id="{{task.id}}_task_todo_{{task.title}}">{{task.title}}</span>
+            <span id="{{task.id}}_task_todo_{{task.title}}" class="pl-2">{{task.title}}</span>
             <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="{{task.id}}_deadline_todo_{{task.title}}">
               {{task.deadline}}
             </div>
@@ -21,10 +22,22 @@
                       fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
+                      class="pr-8"
             ></mat-icon>
+
+            <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background">
+              <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+            </button>
+
+            <button mat-mini-fab aria-label="Button to transfer to nothing" class="mx-1.5 arrow_icon_background">
+              <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+            </button>
+
+            <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task)">
+              <mat-icon fontIcon="delete" class="text-white"></mat-icon>
+            </button>
           </div>
         }
-        <button (click)="openDialog()" id="add_task_button" type="button" class="w-full mb-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Task</button>
       </div>
     </mat-card>
   </div>
