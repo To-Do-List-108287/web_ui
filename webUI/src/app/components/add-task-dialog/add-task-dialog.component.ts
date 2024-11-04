@@ -20,6 +20,7 @@ import {TaskPriority} from "../../models/TaskPriority";
 import {TaskService} from "../../services/task.service";
 import {futureDateValidator} from "../../validators/futureDateValidator";
 import {TaskResponse} from "../../models/TaskResponse";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-add-task-dialog',
@@ -46,6 +47,7 @@ import {TaskResponse} from "../../models/TaskResponse";
 })
 export class AddTaskDialogComponent {
   readonly dialogRef = inject(MatDialogRef<AddTaskDialogComponent>);
+  private readonly _snackBar = inject(MatSnackBar);
 
   taskService = inject(TaskService);
   createTaskFormGroup: FormGroup = new FormGroup({
@@ -73,17 +75,24 @@ export class AddTaskDialogComponent {
         next: (res: TaskResponse) => {
           console.log(res);
           this.dialogRef.close(res);
+          this._snackBar.open("Task created successfully!", "Close", {
+            duration: 2000,
+            panelClass: ['primary_snackbar']
+          });
         },
         error: err => {
           console.error(err);
           this.dialogRef.close();
+          this._snackBar.open("Error creating task. Try again later!", "Close", {
+            duration: 2000,
+            panelClass: ['warning_snackbar']
+          });
         }
       })
 
     } else {
       console.error("Invalid form data");
     }
-
   }
 
 }

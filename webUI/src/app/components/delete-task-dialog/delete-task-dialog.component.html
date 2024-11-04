@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Delete Task</h2>
+<mat-dialog-content>
+  <div class="text-base">Are you sure you want to delete the task:</div>
+  <b class="text-base">{{ data.task.title }}</b>
+
+  <mat-card class="warning-card my-2">
+    <div class="flex items-center w-full mb-1">
+      <mat-icon fontIcon="warning" [ngStyle]="{ 'font-size': '20px' }"></mat-icon>
+      <strong class="text-base">Warning</strong>
+    </div>
+
+    <div class="warning-content">
+      <p>This action is <b>irreversible</b>. By deleting it, you won't be able to access it later.</p>
+    </div>
+  </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions class="p-0">
+  <button mat-button (click)="onConfirmClick()" id="confirm_delete_button">Confirm</button>
+  <button mat-button color="warn" (click)="onCancelClick()" id="cancel_delete_button" cdkFocusInitial>Cancel</button>
+</mat-dialog-actions>

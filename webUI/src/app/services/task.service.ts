@@ -18,4 +18,9 @@ export class TaskService {
     const url: string = this.baseURL;
     return this.http.post<TaskResponse>(url, task);
   }
+
+  deleteTask(taskId: number): Observable<void> {
+    const url: string = `${this.baseURL}/${taskId}`;
+    return this.http.delete<void>(url);
+  }
 }
