@@ -90,12 +90,12 @@ export class EditTaskDialogComponent {
       }
       this.taskService.editTask(this.data.task.id, changedFields).subscribe({
         next: (task: TaskResponse) => {
+          Object.assign(this.data.task, task)
           this.dialogRef.close(task);
           this._snackBar.open('Task edited successfully!', 'Close', {
             duration: 2000,
             panelClass: ['primary_snackbar']
           });
-
         },
         error: (error) => {
           console.error(error)

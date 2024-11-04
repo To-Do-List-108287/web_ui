@@ -63,7 +63,7 @@ export class HomeComponent {
   }
 
   openEditDialog(taskToEdit: TaskResponse) {
-    const dialogRef = this.dialog.open(EditTaskDialogComponent, {
+    this.dialog.open(EditTaskDialogComponent, {
       height: '523px',
       width: '523px',
       data: {task: taskToEdit}
