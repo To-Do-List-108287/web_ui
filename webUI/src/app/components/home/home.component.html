@@ -76,7 +76,7 @@
         class="list w-11/12 space-y-3"
         (cdkDropListDropped)="drop($event)">
         @for (task of inProgressTasks; track task) {
-          <div class="flex flex-col border-l-4 bg-white border-purple-400 p-4 rounded-lg shadow-sm space-y-2 relative" cdkDrag>
+          <div class="flex flex-col border-l-4 bg-white border-yellow-400 p-4 rounded-lg shadow-sm space-y-2 relative" cdkDrag>
             <div class="flex items-center">
               <h3 id="{{task.id}}_task_inprogress_{{task.title}}" class="w-11/12 text-lg font-semibold text-gray-800 text-start">{{task.title}}</h3>
               <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-lg shadow-sm"
@@ -141,7 +141,7 @@
         class="list w-11/12 space-y-3"
         (cdkDropListDropped)="drop($event)">
         @for (task of doneTasks; track task) {
-          <div class="flex flex-col border-l-4 bg-white border-purple-400 p-4 rounded-lg shadow-sm space-y-2 relative" cdkDrag>
+          <div class="flex flex-col border-l-4 bg-white border-green-400 p-4 rounded-lg shadow-sm space-y-2 relative" cdkDrag>
             <div class="flex items-center">
               <h3 id="{{task.id}}_task_done_{{task.title}}" class="w-11/12 text-lg font-semibold text-gray-800 text-start">{{task.title}}</h3>
               <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-lg shadow-sm"
