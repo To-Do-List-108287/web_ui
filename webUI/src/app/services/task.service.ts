@@ -28,4 +28,8 @@ export class TaskService {
     const url: string = `${this.baseURL}/${taskId}`;
     return this.http.put<TaskResponse>(url, updatedTask);
   }
+
+  getTasks() : Observable<TaskResponse[]> {
+    return this.http.get<TaskResponse[]>(this.baseURL);
+  }
 }

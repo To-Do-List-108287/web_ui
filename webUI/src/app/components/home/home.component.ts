@@ -7,29 +7,56 @@ import {TaskResponse} from "../../models/TaskResponse";
 import {MatIcon} from "@angular/material/icon";
 import {TaskPriority} from "../../models/TaskPriority";
 import {MatMiniFabButton} from "@angular/material/button";
-import {NgStyle} from "@angular/common";
+import {DatePipe, NgClass, NgIf, NgStyle} from "@angular/common";
 import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialog.component";
 import {EditTaskDialogComponent} from "../edit-task-dialog/edit-task-dialog.component";
+import {TaskService} from "../../services/task.service";
+import {TaskCompletionStatus} from "../../models/TaskCompletionStatus";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CdkDropList, CdkDrag, MatCard, MatIcon, MatMiniFabButton, NgStyle
+    CdkDropList, CdkDrag, MatCard, MatIcon, MatMiniFabButton, NgStyle, NgClass, DatePipe, NgIf
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
   readonly dialog = inject(MatDialog);
+  taskService = inject(TaskService);
   todoTasks: TaskResponse[] = [];
   inProgressTasks: TaskResponse[] = [];
   doneTasks: TaskResponse[] = [];
 
+  constructor(private datePipe: DatePipe) {
+    this.taskService.getTasks().subscribe({
+      next: (tasks: TaskResponse[]) => {
+        tasks.forEach(task => {
+          if (task.completionStatus === TaskCompletionStatus.TO_DO) {
+            this.todoTasks.push(task);
+          } else if (task.completionStatus === TaskCompletionStatus.IN_PROGRESS) {
+            this.inProgressTasks.push(task);
+          } else {
+            this.doneTasks.push(task);
+          }
+        });
+      },
+      error: err => {
+        console.error(err);
+      }
+
+    })
+  }
+
+  formatDate(dateString: string): string | null {
+    return this.datePipe.transform(dateString, 'dd/MM');
+  }
+
   openAddDialog() {
     const dialogRef = this.dialog.open(AddTaskDialogComponent, {
-      height: '523px',
-      width: '523px',
+      height: '618px',
+      width: '618px',
     });
     dialogRef.afterClosed().subscribe({
       next: (task: TaskResponse) => {
@@ -57,8 +84,8 @@ export class HomeComponent {
 
   openEditDialog(taskToEdit: TaskResponse) {
     this.dialog.open(EditTaskDialogComponent, {
-      height: '523px',
-      width: '523px',
+      height: '618px',
+      width: '618px',
       data: {task: taskToEdit}
     });
   }
@@ -76,7 +103,7 @@ export class HomeComponent {
     }
   }
 
-
-
+  protected readonly Date = Date;
+  protected readonly String = String;
   protected readonly TaskPriority = TaskPriority;
 }

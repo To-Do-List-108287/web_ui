@@ -1,7 +1,7 @@
 <div class="text-center w-full mt-24">
 
   <div class="container">
-    <mat-card class="flex justify-center items-center p-4">
+    <mat-card class="flex justify-center items-center p-4 min-h-48">
       <h2 class="mt-4 mb-1 text-2xl font-bold text-gray-800">To do</h2>
       <span class="bg-purple-500 w-20 h-2 rounded-full mb-8"></span>
       <div
@@ -9,40 +9,54 @@
         #todoList="cdkDropList"
         [cdkDropListData]="todoTasks"
         [cdkDropListConnectedTo]="[inProgressList, doneList]"
-        class="list w-11/12"
+        class="list w-11/12 space-y-3"
         (cdkDropListDropped)="drop($event)">
         <button (click)="openAddDialog()" id="add_task_button" type="button" class="w-full mb-4 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Task</button>
         @for (task of todoTasks; track task) {
-          <div class="box my-2" cdkDrag>
-            <span id="{{task.id}}_task_todo_{{task.title}}" class="pl-2">{{task.title}}</span>
-            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="{{task.id}}_deadline_todo_{{task.title}}">
-              {{task.deadline}}
-            </div>
-            <mat-icon id="{{task.id}}_task_todo_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
-                      fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
+          <div class="flex flex-col border-l-4 bg-white border-purple-400 p-4 rounded-lg shadow-sm space-y-2 relative" cdkDrag>
+            <div class="flex items-center">
+              <h3 id="{{task.id}}_task_todo_{{task.title}}" class="w-11/12 text-lg font-semibold text-gray-800 text-start">{{task.title}}</h3>
+              <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-lg shadow-sm"
+                   [ngClass]="task.priority == TaskPriority.HIGH ? 'bg-red-100 text-red-600' :
+                                     task.priority == TaskPriority.MEDIUM ? 'bg-yellow-100 text-yellow-600' :
+                                     'bg-green-100 text-green-600'">
+                <mat-icon id="{{task.id}}_task_todo_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+                          fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
-            ></mat-icon>
-
-            <div>
-              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background mr-1.5">
-                <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+                          class="priority_icon"
+                ></mat-icon>
+              </div>
+            </div>
+            <div class="flex justify-between text-sm text-gray-500">
+              <div class="flex items-center text-sm space-x-2 text-gray-600">
+                <span class="font-semibold">Category:</span>
+                <span class="bg-violet-200 text-violet-700 font-bold px-2 py-0.5 rounded-lg">{{task.category}}</span>
+              </div>
+              <div class="flex items-center text-sm space-x-2 text-gray-600">
+                <span class="font-semibold">Due:</span>
+                <span class="bg-violet-200 text-violet-700 font-bold px-2 py-0.5 rounded-lg">{{task.deadline | date: 'dd/MM'}}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-500 text-justify">{{task.description}}</p>
+            <div class="text-sm text-gray-500 text-left flex">
+              <div><span class="font-semibold">Created: </span>{{task.creationDate | date: 'dd/MM/YYYY'}}</div>
+              <div><span class="font-semibold">Last Updated: </span>{{task.lastUpdated | date: 'dd/MM/YYYY'}}</div>
+            </div>
+            <div class="flex justify-end space-x-1.5 mt-3">
+              <button mat-mini-fab aria-label="Move to In Progress" class="bg-gray-200 text-gray-600">
+                <mat-icon fontIcon="arrow_back"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mr-1.5">
-                <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+              <button mat-mini-fab aria-label="Move to Done" class="bg-gray-200 text-gray-600">
+                <mat-icon fontIcon="arrow_forward"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background mr-1.5" (click)="openEditDialog(task)">
+              <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background" (click)="openEditDialog(task)">
                 <mat-icon fontIcon="edit" class="text-white"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.todoTasks)">
+              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task, this.todoTasks)">
                 <mat-icon fontIcon="delete" class="text-white"></mat-icon>
               </button>
             </div>
-
-
           </div>
         }
       </div>
@@ -51,7 +65,7 @@
 
 
   <div class="container">
-    <mat-card class="flex justify-center items-center p-4">
+    <mat-card class="flex justify-center items-center p-4 min-h-48">
       <h2 class="mt-4 mb-1 text-2xl font-bold text-gray-800">In progress</h2>
       <span class="bg-yellow-500 h-2 rounded-full mb-4" style="width: 166px"></span>
       <div
@@ -62,22 +76,42 @@
         class="list w-11/12"
         (cdkDropListDropped)="drop($event)">
         @for (task of inProgressTasks; track task) {
-          <div class="box my-2" cdkDrag>
-            <span id="{{task.id}}_task_inprogress_{{task.title}}">{{task.title}}</span>
-            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="{{task.id}}_deadline_inprogress_{{task.title}}">
-              {{task.deadline}}
-            </div>
-            <mat-icon id="{{task.id}}_task_inprogress_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
-                      fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
+          <div class="flex flex-col border-l-4 bg-white border-purple-400 p-4 rounded-lg shadow-sm space-y-2 relative" cdkDrag>
+            <div class="flex items-center">
+              <h3 id="{{task.id}}_task_inprogress_{{task.title}}" class="w-11/12 text-lg font-semibold text-gray-800 text-start">{{task.title}}</h3>
+              <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-lg shadow-sm"
+                   [ngClass]="task.priority == TaskPriority.HIGH ? 'bg-red-100 text-red-600' :
+                                     task.priority == TaskPriority.MEDIUM ? 'bg-yellow-100 text-yellow-600' :
+                                     'bg-green-100 text-green-600'">
+                <mat-icon id="{{task.id}}_task_inprogress_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+                          fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
-            ></mat-icon>
-            <div>
-              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background mr-1.5">
+                          class="priority_icon"
+                ></mat-icon>
+              </div>
+            </div>
+            <div class="flex justify-between text-sm text-gray-500">
+              <div class="flex items-center text-sm space-x-2 text-gray-600">
+                <span class="font-semibold">Category:</span>
+                <span class="bg-violet-200 text-violet-700 font-bold px-2 py-0.5 rounded-lg">{{task.category}}</span>
+              </div>
+              <div class="flex items-center text-sm space-x-2 text-gray-600">
+                <span class="font-semibold">Due:</span>
+                <span class="bg-violet-200 text-violet-700 font-bold px-2 py-0.5 rounded-lg">{{task.deadline | date: 'dd/MM'}}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-500 text-justify">{{task.description}}</p>
+            <div class="text-sm text-gray-500 text-left flex">
+              <div><span class="font-semibold">Created: </span>{{task.creationDate | date: 'dd/MM/YYYY'}}</div>
+              <div><span class="font-semibold">Last Updated: </span>{{task.lastUpdated | date: 'dd/MM/YYYY'}}</div>
+            </div>
+            <div class="flex justify-end space-x-1.5 mt-3">
+              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="bg-gray-200 text-gray-600">
                 <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
               </button>
 
-              <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mr-1.5">
+              <button mat-mini-fab aria-label="Button to transfer to nothing" class="bg-gray-200 text-gray-600">
                 <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
               </button>
 
@@ -96,7 +130,7 @@
   </div>
 
   <div class="container">
-    <mat-card class="flex justify-center items-center p-4">
+    <mat-card class="flex justify-center items-center p-4 min-h-48">
       <h2 class="mt-4 mb-1 text-2xl font-bold text-gray-800">Done</h2>
       <span class="bg-green-500 w-20 h-2 rounded-full mb-4"></span>
       <div
@@ -107,34 +141,52 @@
         class="list w-11/12"
         (cdkDropListDropped)="drop($event)">
         @for (task of doneTasks; track task) {
-          <div class="box my-2" cdkDrag>
-            <span id="{{task.id}}_task_done_{{task.title}}">{{task.title}}</span>
-            <div class="bg-violet-200 text-violet-700 font-bold text-base px-1 py-1 rounded-lg shadow-lg" id="{{task.id}}_deadline_done_{{task.title}}">
-              {{task.deadline}}
-            </div>
-            <mat-icon id="{{task.id}}_task_done_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
-                      fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
+          <div class="flex flex-col border-l-4 bg-white border-purple-400 p-4 rounded-lg shadow-sm space-y-2 relative" cdkDrag>
+            <div class="flex items-center">
+              <h3 id="{{task.id}}_task_done_{{task.title}}" class="w-11/12 text-lg font-semibold text-gray-800 text-start">{{task.title}}</h3>
+              <div class="absolute top-2 right-2 w-8 h-8 flex items-center justify-center rounded-lg shadow-sm"
+                   [ngClass]="task.priority == TaskPriority.HIGH ? 'bg-red-100 text-red-600' :
+                                     task.priority == TaskPriority.MEDIUM ? 'bg-yellow-100 text-yellow-600' :
+                                     'bg-green-100 text-green-600'">
+                <mat-icon id="{{task.id}}_task_done_{{task.title}}_icon_{{task.priority}}" aria-hidden="false" aria-label="Example home icon"
+                          fontIcon="{{task.priority == TaskPriority.HIGH ? 'warning' :
                                   task.priority == TaskPriority.MEDIUM ? 'check_box' :
                                   'low_priority'}}"
-            ></mat-icon>
-            <div>
-              <div>
-                <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="arrow_icon_background mr-1.5">
-                  <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
-                </button>
-
-                <button mat-mini-fab aria-label="Button to transfer to nothing" class="arrow_icon_background mr-1.5">
-                  <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
-                </button>
-
-                <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background mr-1.5" (click)="openEditDialog(task)">
-                  <mat-icon fontIcon="edit" class="text-white"></mat-icon>
-                </button>
-
-                <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.doneTasks)">
-                  <mat-icon fontIcon="delete" class="text-white"></mat-icon>
-                </button>
+                          class="priority_icon"
+                ></mat-icon>
               </div>
+            </div>
+            <div class="flex justify-between text-sm text-gray-500">
+              <div class="flex items-center text-sm space-x-2 text-gray-600">
+                <span class="font-semibold">Category:</span>
+                <span class="bg-violet-200 text-violet-700 font-bold px-2 py-0.5 rounded-lg">{{task.category}}</span>
+              </div>
+              <div class="flex items-center text-sm space-x-2 text-gray-600">
+                <span class="font-semibold">Due:</span>
+                <span class="bg-violet-200 text-violet-700 font-bold px-2 py-0.5 rounded-lg">{{task.deadline | date: 'dd/MM'}}</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-500 text-justify">{{task.description}}</p>
+            <div class="text-sm text-gray-500 text-left flex">
+              <div><span class="font-semibold">Created: </span>{{task.creationDate | date: 'dd/MM/YYYY'}}</div>
+              <div><span class="font-semibold">Last Updated: </span>{{task.lastUpdated | date: 'dd/MM/YYYY'}}</div>
+            </div>
+            <div class="flex justify-end space-x-1.5 mt-3">
+              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="bg-gray-200 text-gray-600">
+                <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to transfer to nothing" class="bg-gray-200 text-gray-600">
+                <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background mr-1.5" (click)="openEditDialog(task)">
+                <mat-icon fontIcon="edit" class="text-white"></mat-icon>
+              </button>
+
+              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.doneTasks)">
+                <mat-icon fontIcon="delete" class="text-white"></mat-icon>
+              </button>
             </div>
           </div>
         }
