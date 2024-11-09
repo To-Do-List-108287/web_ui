@@ -61,6 +61,7 @@ export class EditTaskDialogComponent {
     this.originalTaskValues = {
       title: this.data.task.title,
       description: this.data.task.description,
+      category: this.data.task.category,
       deadline: deadline,
       priority: this.data.task.priority,
     };
@@ -68,6 +69,7 @@ export class EditTaskDialogComponent {
     this.editTaskFormGroup = new FormGroup({
       title: new FormControl(this.data.task.title, Validators.required),
       description: new FormControl(this.data.task.description, Validators.required),
+      category: new FormControl(this.data.task.category, [Validators.required, Validators.maxLength(16)]),
       deadline: new FormControl(deadline, [Validators.required, futureDateValidator]),
       priority: new FormControl(this.data.task.priority, Validators.required),
     })

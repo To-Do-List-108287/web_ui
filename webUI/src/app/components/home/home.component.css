@@ -61,3 +61,7 @@
 .arrow_icon_background {
   background-color: #D1D5DB;
 }
+
+.priority_icon {
+  transform: scale(0.8);
+}

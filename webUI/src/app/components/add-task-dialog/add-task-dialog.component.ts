@@ -53,6 +53,7 @@ export class AddTaskDialogComponent {
   createTaskFormGroup: FormGroup = new FormGroup({
     title: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
+    category: new FormControl('', [Validators.required, Validators.maxLength(16)]),
     deadline: new FormControl('', [Validators.required, futureDateValidator]),
     priority: new FormControl('', Validators.required),
   });
@@ -69,6 +70,7 @@ export class AddTaskDialogComponent {
       this.taskService.createTask({
         title: this.createTaskFormGroup.get('title')?.value,
         description: this.createTaskFormGroup.get('description')?.value,
+        category: this.createTaskFormGroup.get('category')?.value,
         deadline: this.createTaskFormGroup.get('deadline')?.value,
         priority: this.createTaskFormGroup.get('priority')?.value
       }).subscribe({
@@ -95,4 +97,5 @@ export class AddTaskDialogComponent {
     }
   }
 
+  protected readonly console = console;
 }
