@@ -30,6 +30,16 @@ export class HomeComponent {
   todoTasks: TaskResponse[] = [];
   inProgressTasks: TaskResponse[] = [];
   doneTasks: TaskResponse[] = [];
+  allCompletionStatus: TaskCompletionStatus[] = [
+    TaskCompletionStatus.TO_DO,
+    TaskCompletionStatus.IN_PROGRESS,
+    TaskCompletionStatus.DONE
+  ]
+  tasksByCompletionStatus = {
+    [TaskCompletionStatus.TO_DO]: this.todoTasks,
+    [TaskCompletionStatus.IN_PROGRESS]: this.inProgressTasks,
+    [TaskCompletionStatus.DONE]: this.doneTasks
+  }
 
   constructor(private datePipe: DatePipe) {
     this.taskService.getTasks().subscribe({
@@ -106,15 +116,13 @@ export class HomeComponent {
         event.previousIndex,
         event.currentIndex,
       );
-      const transferingTask: TaskResponse = event.container.data[event.currentIndex];
-      const newCompletionStatus: TaskCompletionStatus = [
-        TaskCompletionStatus.TO_DO,
-        TaskCompletionStatus.IN_PROGRESS,
-        TaskCompletionStatus.DONE
-      ][parseInt(event.container.id.split('-').slice(-1)[0])]
-      this.taskService.editTask(transferingTask.id, {"completionStatus": newCompletionStatus}).subscribe({
+      const transferringTask: TaskResponse = event.container.data[event.currentIndex];
+      const newCompletionStatus: TaskCompletionStatus = this.allCompletionStatus[
+        parseInt(event.container.id.split('-').slice(-1)[0])
+      ]
+      this.taskService.editTask(transferringTask.id, {"completionStatus": newCompletionStatus}).subscribe({
         next: (task: TaskResponse) => {
-          Object.assign(transferingTask, task)
+          Object.assign(transferringTask, task)
           // Task moved successfully - no need to change anything
         },
         error: (error) => {
@@ -136,7 +144,34 @@ export class HomeComponent {
 
   }
 
+  moveTask(transferringTask: TaskResponse, newCompletionStatus: TaskCompletionStatus) {
+    const oldCompletionStatus: TaskCompletionStatus = transferringTask.completionStatus;
+    const oldTaskList: TaskResponse[] = this.tasksByCompletionStatus[oldCompletionStatus];
+    const newTaskList: TaskResponse[] = this.tasksByCompletionStatus[newCompletionStatus];
+    const oldIndex = oldTaskList.indexOf(transferringTask);
+    const newIndex = 0;
+    this.taskService.editTask(transferringTask.id, {"completionStatus": newCompletionStatus}).subscribe({
+      next: (task: TaskResponse) => {
+        Object.assign(transferringTask, task)
+        transferArrayItem(
+          oldTaskList,
+          newTaskList,
+          oldIndex,
+          newIndex,
+        );
+      },
+      error: (error) => {
+        console.error(error)
+        this._snackBar.open('Error changing task status. Try again later!', 'Close', {
+          duration: 2000,
+          panelClass: ['warning_snackbar']
+        });
+      }
+    });
+  }
+
   protected readonly Date = Date;
   protected readonly String = String;
   protected readonly TaskPriority = TaskPriority;
+  protected readonly TaskCompletionStatus = TaskCompletionStatus;
 }
