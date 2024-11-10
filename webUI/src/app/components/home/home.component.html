@@ -43,17 +43,19 @@
               <div><span class="font-semibold">Created: </span>{{task.creationDate | date: 'dd/MM/YYYY'}}</div>
               <div><span class="font-semibold">Last Updated: </span>{{task.lastUpdated | date: 'dd/MM/YYYY'}}</div>
             </div>
-            <div class="flex justify-end space-x-1.5 mt-3">
-              <button mat-mini-fab aria-label="Move to In Progress" class="bg-gray-200 text-gray-600">
-                <mat-icon fontIcon="arrow_back"></mat-icon>
+            <div class="flex justify-end space-x-0.5">
+              <button mat-mini-fab aria-label="Move to In Progress" class="action_icon in_progress_background" (click)="moveTask(
+                task, TaskCompletionStatus.IN_PROGRESS)">
+                <mat-icon fontIcon="hourglass_top" class="text-yellow-600"></mat-icon>
               </button>
-              <button mat-mini-fab aria-label="Move to Done" class="bg-gray-200 text-gray-600">
-                <mat-icon fontIcon="arrow_forward"></mat-icon>
+              <button mat-mini-fab aria-label="Move to Done" class="action_icon done_background"  (click)="moveTask(
+                task, TaskCompletionStatus.DONE)">
+                <mat-icon fontIcon="check" class="text-green-600"></mat-icon>
               </button>
-              <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background" (click)="openEditDialog(task)">
+              <button mat-mini-fab aria-label="Button to edit a task" class="action_icon edit_icon_background" (click)="openEditDialog(task)">
                 <mat-icon fontIcon="edit" class="text-white"></mat-icon>
               </button>
-              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background" (click)="openDeleteDialog(task, this.todoTasks)">
+              <button mat-mini-fab aria-label="Button to delete a task" class="action_icon trash_icon_background" (click)="openDeleteDialog(task, this.todoTasks)">
                 <mat-icon fontIcon="delete" class="text-white"></mat-icon>
               </button>
             </div>
@@ -106,20 +108,19 @@
               <div><span class="font-semibold">Created: </span>{{task.creationDate | date: 'dd/MM/YYYY'}}</div>
               <div><span class="font-semibold">Last Updated: </span>{{task.lastUpdated | date: 'dd/MM/YYYY'}}</div>
             </div>
-            <div class="flex justify-end space-x-1.5 mt-3">
-              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="bg-gray-200 text-gray-600">
-                <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+            <div class="flex justify-end space-x-0.5">
+              <button mat-mini-fab aria-label="Move to ToDo" class="action_icon todo_background" (click)="moveTask(
+                task, TaskCompletionStatus.TO_DO)">
+                <mat-icon fontIcon="hourglass_empty" class="text-purple-600"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to transfer to nothing" class="bg-gray-200 text-gray-600">
-                <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+              <button mat-mini-fab aria-label="Move to Done" class="action_icon done_background" (click)="moveTask(
+                task, TaskCompletionStatus.DONE)">
+                <mat-icon fontIcon="check" class="text-green-600"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background mr-1.5" (click)="openEditDialog(task)">
+              <button mat-mini-fab aria-label="Button to edit a task" class="action_icon edit_icon_background mr-1.5" (click)="openEditDialog(task)">
                 <mat-icon fontIcon="edit" class="text-white"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.inProgressTasks)">
+              <button mat-mini-fab aria-label="Button to delete a task" class="action_icon trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.inProgressTasks)">
                 <mat-icon fontIcon="delete" class="text-white"></mat-icon>
               </button>
             </div>
@@ -172,20 +173,19 @@
               <div><span class="font-semibold">Created: </span>{{task.creationDate | date: 'dd/MM/YYYY'}}</div>
               <div><span class="font-semibold">Last Updated: </span>{{task.lastUpdated | date: 'dd/MM/YYYY'}}</div>
             </div>
-            <div class="flex justify-end space-x-1.5 mt-3">
-              <button mat-mini-fab aria-label="Button to transfer to In Progress List" class="bg-gray-200 text-gray-600">
-                <mat-icon fontIcon="arrow_back" class="text-black"></mat-icon>
+            <div class="flex justify-end space-x-0.5">
+              <button mat-mini-fab aria-label="Move to ToDo" class="action_icon todo_background" (click)="moveTask(
+                task, TaskCompletionStatus.TO_DO)">
+                <mat-icon fontIcon="hourglass_empty" class="text-purple-600"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to transfer to nothing" class="bg-gray-200 text-gray-600">
-                <mat-icon fontIcon="arrow_forward" class="text-black"></mat-icon>
+              <button mat-mini-fab aria-label="Move to In Progress" class="action_icon in_progress_background" (click)="moveTask(
+                task, TaskCompletionStatus.IN_PROGRESS)">
+                <mat-icon fontIcon="hourglass_top" class="text-yellow-600"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to edit a task" class="edit_icon_background mr-1.5" (click)="openEditDialog(task)">
+              <button mat-mini-fab aria-label="Button to edit a task" class="action_icon edit_icon_background mr-1.5" (click)="openEditDialog(task)">
                 <mat-icon fontIcon="edit" class="text-white"></mat-icon>
               </button>
-
-              <button mat-mini-fab aria-label="Button to delete a task" class="trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.doneTasks)">
+              <button mat-mini-fab aria-label="Button to delete a task" class="action_icon trash_icon_background mr-1.5" (click)="openDeleteDialog(task, this.doneTasks)">
                 <mat-icon fontIcon="delete" class="text-white"></mat-icon>
               </button>
             </div>

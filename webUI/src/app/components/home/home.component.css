@@ -65,3 +65,19 @@
 .priority_icon {
   transform: scale(0.8);
 }
+
+.action_icon {
+  transform: scale(0.9);
+}
+
+.todo_background {
+  background-color: rgb(250 245 255);
+}
+
+.in_progress_background {
+  background-color: rgb(254 252 232);
+}
+
+.done_background {
+  background-color: rgb(240 253 244);
+}
