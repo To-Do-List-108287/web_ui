@@ -1,4 +1,22 @@
-<div class="text-center w-full mt-24">
+<div class="text-center w-full mt-12 p-0">
+  <div class="container"><!-- Empty Container--></div>
+  <div class="container"><!-- Empty Container--></div>
+  <div class="container">
+    <div class="flex justify-end">
+      <mat-form-field class="w-40" style="margin-bottom: -1.75em">
+        <mat-label>Filter By</mat-label>
+        <mat-select [(value)]="selectedTaskCategory" (selectionChange)="filterTasks()">
+          <mat-option *ngFor="let category of taskCategories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+
+<div class="text-center w-full">
 
   <div class="container">
     <mat-card class="flex justify-center items-center p-4 min-h-48">
