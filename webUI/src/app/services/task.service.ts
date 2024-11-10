@@ -4,6 +4,7 @@ import {environment} from "../../environments/environment";
 import {CreateTaskRequest} from "../models/CreateTaskRequest";
 import {TaskResponse} from "../models/TaskResponse";
 import {Observable} from "rxjs";
+import {UpdateTaskRequest} from "../models/UpdateTaskRequest";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,7 @@ export class TaskService {
     return this.http.delete<void>(url);
   }
 
-  editTask(taskId: number, updatedTask: Partial<CreateTaskRequest>): Observable<TaskResponse> {
+  editTask(taskId: number, updatedTask: Partial<UpdateTaskRequest>): Observable<TaskResponse> {
     const url: string = `${this.baseURL}/${taskId}`;
     return this.http.put<TaskResponse>(url, updatedTask);
   }

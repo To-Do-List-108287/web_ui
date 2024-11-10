@@ -12,6 +12,7 @@ import {DeleteTaskDialogComponent} from "../delete-task-dialog/delete-task-dialo
 import {EditTaskDialogComponent} from "../edit-task-dialog/edit-task-dialog.component";
 import {TaskService} from "../../services/task.service";
 import {TaskCompletionStatus} from "../../models/TaskCompletionStatus";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-home',
@@ -24,6 +25,7 @@ import {TaskCompletionStatus} from "../../models/TaskCompletionStatus";
 })
 export class HomeComponent {
   readonly dialog = inject(MatDialog);
+  private readonly _snackBar = inject(MatSnackBar);
   taskService = inject(TaskService);
   todoTasks: TaskResponse[] = [];
   inProgressTasks: TaskResponse[] = [];
@@ -91,16 +93,47 @@ export class HomeComponent {
   }
 
   drop(event: CdkDragDrop<TaskResponse[]>) {
+
     if (event.previousContainer === event.container) {
+      // staying in the same container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      // moving to a different container
+      // optimistic update - move the task to the new container in the UI and revert it if necessary
       transferArrayItem(
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex,
       );
+      const transferingTask: TaskResponse = event.container.data[event.currentIndex];
+      const newCompletionStatus: TaskCompletionStatus = [
+        TaskCompletionStatus.TO_DO,
+        TaskCompletionStatus.IN_PROGRESS,
+        TaskCompletionStatus.DONE
+      ][parseInt(event.container.id.split('-').slice(-1)[0])]
+      this.taskService.editTask(transferingTask.id, {"completionStatus": newCompletionStatus}).subscribe({
+        next: (task: TaskResponse) => {
+          Object.assign(transferingTask, task)
+          // Task moved successfully - no need to change anything
+        },
+        error: (error) => {
+          console.error(error)
+          // Revert the change
+          transferArrayItem(
+            event.container.data,
+            event.previousContainer.data,
+            event.currentIndex,
+            event.previousIndex,
+          );
+          this._snackBar.open('Error changing task status. Try again later!', 'Close', {
+            duration: 2000,
+            panelClass: ['warning_snackbar']
+          });
+        }
+      });
     }
+
   }
 
   protected readonly Date = Date;
