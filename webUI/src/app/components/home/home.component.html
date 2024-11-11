@@ -2,15 +2,18 @@
   <div class="container"><!-- Empty Container--></div>
   <div class="container"><!-- Empty Container--></div>
   <div class="container">
-    <div class="flex justify-end">
+    <div class="flex justify-end items-end space-x-2.5">
       <mat-form-field class="w-40" style="margin-bottom: -1.75em">
-        <mat-label>Filter By</mat-label>
-        <mat-select [(value)]="selectedTaskCategory" (selectionChange)="filterTasks()">
+        <mat-label>Category</mat-label>
+        <mat-select [(value)]="selectedTaskCategory">
           <mat-option *ngFor="let category of taskCategories" [value]="category">
             {{ category }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <button mat-mini-fab aria-label="Button to delete a task" (click)="filterTasks()">
+        <mat-icon fontIcon="search"></mat-icon>
+      </button>
     </div>
   </div>
 </div>

@@ -48,16 +48,24 @@ export class HomeComponent implements OnInit {
   taskCategories: string[] = [];
 
   constructor(private datePipe: DatePipe, private route: ActivatedRoute, private router: Router) {
-    this.loadTasks(this.route.snapshot.queryParamMap.get('category'))
     this.loadCategories()
   }
 
+
+
   ngOnInit(): void {
-    console.log('Home component initialized');
+    this.route.queryParams.subscribe({
+      next: (params) => {
+        this.loadTasks(params["category"])
+      }
+    })
   }
 
 
-  loadTasks(category: String | null = null) {
+  loadTasks(category: string | null = null) {
+    if (category !== null){
+      this.selectedTaskCategory = category;
+    }
     this.taskService.getTasks(category).subscribe({
       next: (tasks: TaskResponse[]) => {
         this.todoTasks = [];
@@ -88,17 +96,6 @@ export class HomeComponent implements OnInit {
       next: (categories: string[]) => {
         this.taskCategories = categories;
         this.taskCategories.sort();
-        const passedCategory: string | null = this.route.snapshot.queryParamMap.get('category');
-        if (passedCategory) {
-          if (this.taskCategories.includes(passedCategory)) {
-            this.selectedTaskCategory = passedCategory;
-          } else {
-            this._snackBar.open("Category doesn't exist. Showing all tasks.", 'Close', {
-              duration: 2000,
-              panelClass: ['warning_snackbar']
-            });
-          }
-        }
       },
       error: err => {
         console.error(err);
@@ -125,8 +122,10 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (task: TaskResponse) => {
         if (task) {
-          this.todoTasks.push(task);
           this.updateCategories(task.category);
+          if (task.category === this.selectedTaskCategory) {
+            this.todoTasks.push(task);
+          }
         }
       }
     });
@@ -155,9 +154,7 @@ export class HomeComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe({
       next: (task: TaskResponse) => {
-        if (task) {
-          this.updateCategories(task.category);
-        }
+        this.updateCategories(task.category);
       }
     });
   }
@@ -232,8 +229,14 @@ export class HomeComponent implements OnInit {
 
 
   filterTasks() {
+    if (!this.taskCategories.includes(this.selectedTaskCategory)) {
+      this._snackBar.open('Please select a valid task category to filter tasks.', 'Close', {
+        duration: 2000,
+        panelClass: ['warning_snackbar']
+      });
+      return
+    }
     this.router.navigate(['home'], {queryParams: {category: this.selectedTaskCategory}});
-    this.loadTasks(this.selectedTaskCategory);
   }
 
   protected readonly Date = Date;
