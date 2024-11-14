@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
     this.taskService.getTaskCategories().subscribe({
       next: (categories: string[]) => {
         this.taskCategories = categories;
-        this.taskCategories.sort();
+        this.taskCategories.sort((a, b) => a.localeCompare(b));
       },
       error: err => {
         console.error(err);
@@ -107,7 +107,7 @@ export class HomeComponent implements OnInit {
     const localTaskCategories: Set<String> = new Set<String>(this.taskCategories);
     localTaskCategories.add(newCategory);
     this.taskCategories = Array.from(localTaskCategories) as string[];
-    this.taskCategories.sort();
+    this.taskCategories.sort((a, b) => a.localeCompare(b));
   }
 
   formatDate(dateString: string): string | null {
