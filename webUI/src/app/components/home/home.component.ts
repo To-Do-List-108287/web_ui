@@ -68,9 +68,9 @@ export class HomeComponent implements OnInit {
     }
     this.taskService.getTasks(category).subscribe({
       next: (tasks: TaskResponse[]) => {
-        this.todoTasks = [];
-        this.inProgressTasks = [];
-        this.doneTasks = [];
+        this.todoTasks.length = 0
+        this.inProgressTasks.length = 0;
+        this.doneTasks.length = 0;
         tasks.forEach(task => {
           if (task.completionStatus === TaskCompletionStatus.TO_DO) {
             this.todoTasks.push(task);
@@ -155,6 +155,17 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (task: TaskResponse) => {
         this.updateCategories(task.category);
+        // If I'm filtering by category and category has changed, remove the task from the old category
+        // so not to display task on the wrong category
+        if (this.selectedTaskCategory !== '' && this.selectedTaskCategory !== task.category) {
+          if (taskToEdit.completionStatus === TaskCompletionStatus.TO_DO) {
+            this.todoTasks.splice(this.todoTasks.indexOf(taskToEdit), 1);
+          } else if (taskToEdit.completionStatus === TaskCompletionStatus.IN_PROGRESS) {
+            this.inProgressTasks.splice(this.inProgressTasks.indexOf(taskToEdit), 1);
+          } else {
+            this.doneTasks.splice(this.doneTasks.indexOf(taskToEdit), 1);
+          }
+        }
       }
     });
   }
@@ -227,14 +238,14 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  clearFiltersAndSort() {
+    this.selectedTaskCategory = '';
+  }
+
 
   filterTasks() {
     if (!this.taskCategories.includes(this.selectedTaskCategory)) {
-      this._snackBar.open('Please select a valid task category to filter tasks.', 'Close', {
-        duration: 2000,
-        panelClass: ['warning_snackbar']
-      });
-      return
+      this.selectedTaskCategory = '';
     }
     this.router.navigate(['home'], {queryParams: {category: this.selectedTaskCategory}});
   }
