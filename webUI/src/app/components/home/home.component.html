@@ -4,6 +4,14 @@
   <div class="container">
     <div class="flex justify-end items-end space-x-2.5">
       <mat-form-field class="w-40" style="margin-bottom: -1.75em">
+        <mat-label>Sort By</mat-label>
+        <mat-select [(value)]="selectedTaskSortingOption">
+          <mat-option *ngFor="let taskSortingOption of allTaskSortingOptions" [value]="taskSortingOption">
+            {{ taskSortingOption.displayName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="w-40" style="margin-bottom: -1.75em">
         <mat-label>Category</mat-label>
         <mat-select [(value)]="selectedTaskCategory">
           <mat-option *ngFor="let category of taskCategories" [value]="category">

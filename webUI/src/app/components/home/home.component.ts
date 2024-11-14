@@ -16,6 +16,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatFormField, MatOption, MatSelect} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {ActivatedRoute, Router} from "@angular/router";
+import {allTaskSortingOptions, TaskSortingOption} from "../../models/TaskSorting";
 
 @Component({
   selector: 'app-home',
@@ -44,6 +45,7 @@ export class HomeComponent implements OnInit {
     [TaskCompletionStatus.IN_PROGRESS]: this.inProgressTasks,
     [TaskCompletionStatus.DONE]: this.doneTasks
   }
+  selectedTaskSortingOption: TaskSortingOption = TaskSortingOption.CREATION_DATE_DESC;
   selectedTaskCategory: string = '';
   taskCategories: string[] = [];
 
@@ -52,10 +54,13 @@ export class HomeComponent implements OnInit {
   }
 
 
-
   ngOnInit(): void {
     this.route.queryParams.subscribe({
       next: (params) => {
+        if (params["sort"]) {
+          this.selectedTaskSortingOption = allTaskSortingOptions.find(option => option.sortName === params["sort"])
+            || TaskSortingOption.CREATION_DATE_DESC;
+        }
         this.loadTasks(params["category"])
       }
     })
@@ -66,7 +71,7 @@ export class HomeComponent implements OnInit {
     if (category !== null){
       this.selectedTaskCategory = category;
     }
-    this.taskService.getTasks(category).subscribe({
+    this.taskService.getTasks(category, this.selectedTaskSortingOption).subscribe({
       next: (tasks: TaskResponse[]) => {
         this.todoTasks.length = 0
         this.inProgressTasks.length = 0;
@@ -247,11 +252,15 @@ export class HomeComponent implements OnInit {
     if (!this.taskCategories.includes(this.selectedTaskCategory)) {
       this.selectedTaskCategory = '';
     }
-    this.router.navigate(['home'], {queryParams: {category: this.selectedTaskCategory}});
+    this.router.navigate(['home'], {queryParams: {
+      sort: this.selectedTaskSortingOption.sortName,
+      category: this.selectedTaskCategory
+    }});
   }
 
   protected readonly Date = Date;
   protected readonly String = String;
   protected readonly TaskPriority = TaskPriority;
   protected readonly TaskCompletionStatus = TaskCompletionStatus;
+  protected readonly allTaskSortingOptions = allTaskSortingOptions;
 }
