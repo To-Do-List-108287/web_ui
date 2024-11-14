@@ -30,7 +30,13 @@ export class TaskService {
     return this.http.put<TaskResponse>(url, updatedTask);
   }
 
-  getTasks() : Observable<TaskResponse[]> {
-    return this.http.get<TaskResponse[]>(this.baseURL);
+  getTasks(category: String | null) : Observable<TaskResponse[]> {
+    return this.http.get<TaskResponse[]>(
+      `${this.baseURL}` + (category ? `?category=${category}` : '')
+    );
+  }
+
+  getTaskCategories() : Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseURL}/categories`);
   }
 }

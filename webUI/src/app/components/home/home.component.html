@@ -1,4 +1,28 @@
-<div class="text-center w-full mt-24">
+<div class="text-center w-full mt-12 p-0">
+  <div class="container"><!-- Empty Container--></div>
+  <div class="container"><!-- Empty Container--></div>
+  <div class="container">
+    <div class="flex justify-end items-end space-x-2.5">
+      <mat-form-field class="w-40" style="margin-bottom: -1.75em">
+        <mat-label>Category</mat-label>
+        <mat-select [(value)]="selectedTaskCategory">
+          <mat-option *ngFor="let category of taskCategories" [value]="category">
+            {{ category }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-mini-fab aria-label="Button to delete a task" (click)="filterTasks()">
+        <mat-icon fontIcon="search"></mat-icon>
+      </button>
+      <button mat-mini-fab aria-label="Button to clear filter and sort" (click)="clearFiltersAndSort()">
+        <mat-icon fontIcon="delete"></mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<div class="text-center w-full">
 
   <div class="container">
     <mat-card class="flex justify-center items-center p-4 min-h-48">
