@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
   selectedTaskCategory: string = '';
   taskCategories: string[] = [];
 
-  constructor(private datePipe: DatePipe, private route: ActivatedRoute, private router: Router) {
+  constructor(private readonly datePipe: DatePipe, private readonly route: ActivatedRoute, private readonly router: Router) {
     this.loadCategories()
   }
 
@@ -108,8 +108,8 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  updateCategories(newCategory: String){
-    const localTaskCategories: Set<String> = new Set<String>(this.taskCategories);
+  updateCategories(newCategory: string){
+    const localTaskCategories: Set<string> = new Set<string>(this.taskCategories);
     localTaskCategories.add(newCategory);
     this.taskCategories = Array.from(localTaskCategories) as string[];
     this.taskCategories.sort((a, b) => a.localeCompare(b));

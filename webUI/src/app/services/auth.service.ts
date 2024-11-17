@@ -8,11 +8,11 @@ import {Router} from "@angular/router";
   providedIn: 'root'
 })
 export class AuthService {
-  private http: HttpClient = inject(HttpClient)
-  private baseURL : string = environment.API_URL + "auth/";
+  private readonly http: HttpClient = inject(HttpClient)
+  private readonly baseURL : string = environment.API_URL + "auth/";
   isLoggedIn!: boolean;
 
-  constructor(private router: Router) {
+  constructor(private readonly router: Router) {
     this.updateLoginStatus()
   }
 
@@ -34,7 +34,7 @@ export class AuthService {
     // let decoded_token = this.helper.decodeToken(authResponse.access)
   }
 
-  getToken(): String | null {
+  getToken(): string | null {
     return localStorage.getItem("token");
   }
 
@@ -44,7 +44,7 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
-  async signIn(code: String): Promise<void> {
+  async signIn(code: string): Promise<void> {
     if (localStorage.getItem("token") !== null){
       return
     }

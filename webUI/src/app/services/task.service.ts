@@ -11,8 +11,8 @@ import {TaskSortingOption} from "../models/TaskSorting";
   providedIn: 'root'
 })
 export class TaskService {
-  private http: HttpClient = inject(HttpClient)
-  private baseURL : string = environment.API_URL + "tasks";
+  private readonly http: HttpClient = inject(HttpClient)
+  private readonly baseURL : string = environment.API_URL + "tasks";
 
   constructor() { }
 
@@ -31,7 +31,7 @@ export class TaskService {
     return this.http.put<TaskResponse>(url, updatedTask);
   }
 
-  getTasks(category: String | null, taskSortingOption: TaskSortingOption) : Observable<TaskResponse[]> {
+  getTasks(category: string | null, taskSortingOption: TaskSortingOption) : Observable<TaskResponse[]> {
     return this.http.get<TaskResponse[]>(
       `${this.baseURL}`
       + `?sort=${taskSortingOption.sortName}`

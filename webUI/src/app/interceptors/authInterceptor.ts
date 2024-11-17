@@ -5,7 +5,7 @@ import {throwError} from "rxjs";
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
   const authService: AuthService = inject(AuthService);
-  const authToken: String | null = authService.getToken();
+  const authToken: string | null = authService.getToken();
   if (req.url.includes('api/auth/sign-in')) {
     return next(req);
   } else if (authToken === null) {
