@@ -245,6 +245,7 @@ export class HomeComponent implements OnInit {
 
   clearFiltersAndSort() {
     this.selectedTaskCategory = '';
+    this.selectedTaskSortingOption = TaskSortingOption.CREATION_DATE_DESC;
   }
 
 

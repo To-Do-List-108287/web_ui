@@ -8,9 +8,9 @@ export class TaskSortingOption {
 }
 
 const allTaskSortingOptions: TaskSortingOption[] = [
-  TaskSortingOption.CREATION_DATE_ASC,
   TaskSortingOption.CREATION_DATE_DESC,
-  TaskSortingOption.DEADLINE_ASC,
+  TaskSortingOption.CREATION_DATE_ASC,
   TaskSortingOption.DEADLINE_DESC,
+  TaskSortingOption.DEADLINE_ASC,
 ]
 export { allTaskSortingOptions }
