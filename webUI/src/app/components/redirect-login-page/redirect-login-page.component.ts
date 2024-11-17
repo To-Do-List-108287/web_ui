@@ -13,7 +13,7 @@ import {AuthService} from "../../services/auth.service";
 export class RedirectLoginPageComponent {
   authService : AuthService = inject(AuthService)
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private readonly router: Router, private readonly route: ActivatedRoute) {
     if (this.authService.isLoggedIn){
       console.log("navigating home")
       this.router.navigate(['home']);

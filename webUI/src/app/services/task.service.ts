@@ -5,13 +5,14 @@ import {CreateTaskRequest} from "../models/CreateTaskRequest";
 import {TaskResponse} from "../models/TaskResponse";
 import {Observable} from "rxjs";
 import {UpdateTaskRequest} from "../models/UpdateTaskRequest";
+import {TaskSortingOption} from "../models/TaskSorting";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private http: HttpClient = inject(HttpClient)
-  private baseURL : string = environment.API_URL + "tasks";
+  private readonly http: HttpClient = inject(HttpClient)
+  private readonly baseURL : string = environment.API_URL + "tasks";
 
   constructor() { }
 
@@ -30,9 +31,11 @@ export class TaskService {
     return this.http.put<TaskResponse>(url, updatedTask);
   }
 
-  getTasks(category: String | null) : Observable<TaskResponse[]> {
+  getTasks(category: string | null, taskSortingOption: TaskSortingOption) : Observable<TaskResponse[]> {
     return this.http.get<TaskResponse[]>(
-      `${this.baseURL}` + (category ? `?category=${category}` : '')
+      `${this.baseURL}`
+      + `?sort=${taskSortingOption.sortName}`
+      + (category ? `&category=${category}` : '')
     );
   }
 
