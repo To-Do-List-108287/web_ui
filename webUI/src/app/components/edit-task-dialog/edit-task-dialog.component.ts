@@ -77,9 +77,17 @@ export class EditTaskDialogComponent {
 
 
   onConfirmClick(): void {
+    const editedTask = this.editTaskFormGroup.value as CreateTaskRequest;
+    const changedFields: Partial<CreateTaskRequest> = this.getChangedFields(this.originalTaskValues, editedTask);
+
+    if (!changedFields.hasOwnProperty('deadline')){
+      // if deadline not updated forget futureDateValidator
+      const deadlineControl = this.editTaskFormGroup.controls['deadline'];
+      deadlineControl.setValidators([Validators.required])
+      deadlineControl.updateValueAndValidity()
+    }
+
     if (this.editTaskFormGroup.valid) {
-      const editedTask = this.editTaskFormGroup.value as CreateTaskRequest;
-      const changedFields: Partial<CreateTaskRequest> = this.getChangedFields(this.originalTaskValues, editedTask);
       const hasNonOptionalValue = Object.keys(changedFields).some(
         key => changedFields[key as keyof CreateTaskRequest] !== undefined
       );

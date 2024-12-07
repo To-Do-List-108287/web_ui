@@ -15,15 +15,16 @@ import {TaskCompletionStatus} from "../../models/TaskCompletionStatus";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatFormField, MatOption, MatSelect} from "@angular/material/select";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {allTaskSortingOptions, TaskSortingOption} from "../../models/TaskSorting";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CdkDropList, CdkDrag, MatCard, MatIcon, MatMiniFabButton, NgStyle, NgClass, DatePipe, NgIf, MatSelect, MatFormField, MatOption, NgForOf,
-    MatFormFieldModule,
+    MatFormFieldModule, RouterLink,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -31,6 +32,7 @@ import {allTaskSortingOptions, TaskSortingOption} from "../../models/TaskSorting
 export class HomeComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   private readonly _snackBar = inject(MatSnackBar);
+  authService: AuthService = inject(AuthService);
   taskService = inject(TaskService);
   todoTasks: TaskResponse[] = [];
   inProgressTasks: TaskResponse[] = [];
@@ -128,8 +130,8 @@ export class HomeComponent implements OnInit {
       next: (task: TaskResponse) => {
         if (task) {
           this.updateCategories(task.category);
-          if (task.category === this.selectedTaskCategory) {
-            this.todoTasks.push(task);
+          if (this.selectedTaskCategory === '' || task.category === this.selectedTaskCategory) {
+            this.todoTasks.unshift(task);
           }
         }
       }
@@ -159,6 +161,9 @@ export class HomeComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe({
       next: (task: TaskResponse) => {
+        if (!task) {
+          return;
+        }
         this.updateCategories(task.category);
         // If I'm filtering by category and category has changed, remove the task from the old category
         // so not to display task on the wrong category

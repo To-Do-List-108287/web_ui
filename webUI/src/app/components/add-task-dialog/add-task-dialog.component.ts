@@ -75,7 +75,6 @@ export class AddTaskDialogComponent {
         priority: this.createTaskFormGroup.get('priority')?.value
       }).subscribe({
         next: (res: TaskResponse) => {
-          console.log(res);
           this.dialogRef.close(res);
           this._snackBar.open("Task created successfully!", "Close", {
             duration: 2000,
